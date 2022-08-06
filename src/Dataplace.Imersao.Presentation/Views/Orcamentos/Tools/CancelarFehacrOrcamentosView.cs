@@ -3,17 +3,22 @@ using Dataplace.Core.Comunications;
 using Dataplace.Core.Domain.Localization.Messages.Extensions;
 using Dataplace.Core.Domain.Notifications;
 using Dataplace.Core.Infra.CrossCutting.EventAggregator.Contracts;
+using Dataplace.Core.win.Controls.Extensions;
 using Dataplace.Core.win.Controls.List.Behaviors;
 using Dataplace.Core.win.Controls.List.Behaviors.Contracts;
 using Dataplace.Core.win.Controls.List.Configurations;
 using Dataplace.Core.win.Controls.List.Delegates;
+using Dataplace.Core.win.Views;
+using Dataplace.Core.win.Views.Extensions;
 using Dataplace.Core.win.Views.Providers;
+using Dataplace.Imersao.Core.Application.Clientes.ViewModels;
 using Dataplace.Imersao.Core.Application.Orcamentos.Commands;
 using Dataplace.Imersao.Core.Application.Orcamentos.Queries;
 using Dataplace.Imersao.Core.Application.Orcamentos.ViewModels;
 using Dataplace.Imersao.Core.Domain.Orcamentos.Enums;
 using Dataplace.Imersao.Presentation.Common;
 using Dataplace.Imersao.Presentation.Views.Orcamentos.Messages;
+using Dataplace.Imersao.Presentation.Views.Providers;
 using dpLibrary05.Infrastructure.Helpers;
 using dpLibrary05.Infrastructure.Helpers.Permission;
 using dpLibrary05.SymphonyInterface;
@@ -35,6 +40,9 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
         private IListBehavior<OrcamentoViewModel, OrcamentoQuery> _orcamentoList;
         private readonly IServiceProvider _serviceProvider;
         private readonly IEventAggregator _eventAggregator;
+        private IList<ClienteViewModel> _clientesSelecionados;
+        private IList<VendedorViewModel> _vendedoresSelecionados;
+        //private IList<UsuarioViewModel> _usuariosSelecionados;
         #endregion
 
         #region constructors
@@ -71,13 +79,11 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             this.optCancelar.Click += opt_Click;
             this.optFechar.Click += opt_Click;
             this.optReabrir.Click += opt_Click;
-            this.optExcluir.Click += opt_Click;
 
             //filtros de data
 
 
-
-            _startDate = DateTime.Today.AddMonths(-1);
+            _startDate = DateTime.Today;
             _endDate = DateTime.Today;
             rangeDate.Date1.Value = _startDate;
             rangeDate.Date2.Value = _endDate;
@@ -86,6 +92,25 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             // pegar key down de um controle
             // dtpPrevisaoEntrega.KeyDown += Dtp_KeyDown;
 
+            //dpiVendedor.SearchObject = GetSearchVendedor();
+            ////dpiVendedor.SearchObject = Common.PedidoSearch.find_usuario();
+            //dpiCliente.SearchObject = Common.PedidoSearch.find_cliente(new clsSymSearch.SearchArgs()
+            //{
+            //    Fields = new List<clsSymInterfaceSearchField>() {
+            //        new clsSymInterfaceSearchField() { SearchIndex=2, VisibleEdit =false },
+            //        new clsSymInterfaceSearchField() { SearchIndex=4, VisibleEdit =false }
+            //    }
+            //});
+
+            var clienteViewProvicer = dpLibrary05.BootStrapper.Container.GetViewProvider<SelectableListView, ClienteListViewProvider>();
+            chkSelCliente.ConfigureSelector(clienteViewProvicer, itens => {
+                _clientesSelecionados = itens.ToList();
+            });
+
+            //var vendedorViewProvicer = dpLibrary05.BootStrapper.Container.GetViewProvider<SelectableListView, VendedorListViewProvider>();
+            //chkSelCliente.ConfigureSelector(clienteViewProvicer, itens => {
+            //    _vendedoresSelecionados = (IList<VendedorViewModel>)itens.ToList();
+            //});
 
 
             // rotina para validar status do controle
@@ -104,7 +129,10 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             CancelarOrcamento,
             FecharOrcamento,
             ReabrirOrcamento,
+            ExcluirOrcamento,
         }
+
+
         private void CancelamentoOrcamentoView_ToolConfiguration(object sender, ToolConfigurationEventArgs e)
         {
             // definições iniciais do projeto
@@ -117,8 +145,7 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
         private void CancelamentoOrcamentoView_BeforeProcess(object sender, BeforeProcessEventArgs e)
         {
             // defaul 
-            _tipoAcao = TipoAcaoEnum.CancelarOrcamento;
-
+            _tipoAcao = TipoAcaoEnum.FecharOrcamento;
             if (optCancelar.Checked)
                 _tipoAcao = TipoAcaoEnum.CancelarOrcamento;
 
@@ -147,8 +174,10 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             }
 
 
+
             e.Parameter.Items.Add("acao", _tipoAcao);
             e.Parameter.Items.Add("itensSelecionados", itensSelecionados);
+
         }
         private async void CancelamentoOrcamentoView_Process(object sender, ProcessEventArgs e)
         {
@@ -181,6 +210,45 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
                         // registrar log na parte de detalhes
                         e.LogBuilder.Items.Add($"Orçamento {item.NumOrcamento} reaberto", dpLibrary05.Infrastructure.Helpers.LogBuilder.LogTypeEnum.Information);
                         break;
+                    default:
+                        break;
+                }
+
+
+
+                // permitir cancelamento 
+                if (e.CancellationRequested)
+                    break;
+
+                e.ProgressValue += 1;
+            }
+
+            e.ProgressMinimum = 0;
+            e.ProgressMaximum = itensSelecionados.Count();
+            e.BeginProcess();
+
+            // um a um
+            foreach (var item in itensSelecionados)
+            {
+
+                switch (acao)
+                {
+                    case TipoAcaoEnum.CancelarOrcamento:
+                        await CancelarOrcamento(item);
+                        // registrar log na parte de detalhes
+                        e.LogBuilder.Items.Add($"Orçamento {item.NumOrcamento} cancelado", dpLibrary05.Infrastructure.Helpers.LogBuilder.LogTypeEnum.Information);
+                        break;
+                    case TipoAcaoEnum.FecharOrcamento:
+                        await FecharOrcamento(item);
+                        // registrar log na parte de detalhes
+                        e.LogBuilder.Items.Add($"Orçamento {item.NumOrcamento} fechado", dpLibrary05.Infrastructure.Helpers.LogBuilder.LogTypeEnum.Information);
+                        break;
+                    case TipoAcaoEnum.ReabrirOrcamento:
+                        await ReabrirOrcamento(item);
+                        // registrar log na parte de detalhes
+                        e.LogBuilder.Items.Add($"Orçamento {item.NumOrcamento} reaberto", dpLibrary05.Infrastructure.Helpers.LogBuilder.LogTypeEnum.Information);
+                        break;
+
                     default:
                         break;
                 }
@@ -371,6 +439,14 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             if (chkCancelado.Checked)
                 situacaoList.Add(Core.Domain.Orcamentos.Enums.OrcamentoStatusEnum.Cancelado);
 
+            var tpBusca = string.Empty;
+            if (dtAbertura.Checked)
+                tpBusca = "dtOrcamento";
+            else if (dtFechamento.Checked)
+                tpBusca = "dtFechamento";
+            else if(dtAlteracao.Checked)
+                tpBusca = "dtValidade";
+
 
             DateTime? dtInicio = null;
             DateTime? dtFim = null;
@@ -380,9 +456,25 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             if (rangeDate.Date2.Value is DateTime d2)
                 dtFim = d2;
 
-            var query = new OrcamentoQuery() { SituacaoList = situacaoList, DtInicio = dtInicio, DtFim = dtFim };
+            //var filtro = txtFiltro.Text;
+
+            var cdClienteList = _clientesSelecionados?.Select(x => x.CdCliente).ToList();
+            var cdVendedorList = _vendedoresSelecionados?.Select(x => x.CdVendedor).ToList();
+            //var usuariosList = _usuariosSelecionados?.Select(x => x.Usuario).ToList();
+
+            var query = new OrcamentoQuery()
+            {
+                SituacaoList = situacaoList,
+                DtInicio = dtInicio,
+                DtFim = dtFim,
+                CdClienteList = cdClienteList,
+                CdVendedorList = cdVendedorList,
+                //UsuariosList = usuariosList,
+                TpBusca = tpBusca
+            };
             return query;
         }
+
 
         #endregion
 
@@ -518,17 +610,38 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             }
 
         }
+
+        private async Task ExcluirOrcamento(OrcamentoViewModel item)
+        {
+            //try 
+            //{
+            //    using (var scope = dpLibrary05.Infrastructure.ServiceLocator.ServiceLocatorScoped.Factory())
+            //    {
+
+            //        var command = new ExcluirOrcamentoCommand(item);
+            //        var mediator = scope.Container.GetInstance<IMediatorHandler>();
+
+            //        var notifications = scope.Container.GetInstance<INotificationHandler<DomainNotification>>();
+            //        await mediator.SendCommand(command);
+
+            //        item.Result = Result.ResultFactory.New(notifications.GetNotifications());
+            //        if (item.Result.Success)
+            //        {
+            //            MessageBox.Show("Orçamento Excuido com Sucesso");
+            //        }
+            //    }
+            //}
+            //catch
+            //{
+            //    MessageBox.Show("Erro ao excluir o orçamento.");
+            //}
+
+        }
         #endregion
 
         #region consultas
 
-        private void dpCliente_CheckedChanged(object sender, EventArgs e)
-        {
-
-        }
-
         #endregion
-
 
     }
 }

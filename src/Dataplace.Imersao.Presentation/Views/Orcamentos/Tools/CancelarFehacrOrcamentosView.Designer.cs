@@ -43,18 +43,15 @@
             this.rangeDate = new dpLibrary05.ucSymGen_ReferenceDtp();
             this.gbData = new System.Windows.Forms.GroupBox();
             this.dtAlteracao = new System.Windows.Forms.RadioButton();
-            this.dtCancelamento = new System.Windows.Forms.RadioButton();
             this.dtFechamento = new System.Windows.Forms.RadioButton();
             this.dtAbertura = new System.Windows.Forms.RadioButton();
             this.gbAcoes = new System.Windows.Forms.GroupBox();
-            this.optExcluir = new System.Windows.Forms.RadioButton();
             this.optReabrir = new System.Windows.Forms.RadioButton();
             this.optFechar = new System.Windows.Forms.RadioButton();
             this.optCancelar = new System.Windows.Forms.RadioButton();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
-            this.chkUsuario = new System.Windows.Forms.CheckBox();
             this.chkVendedor = new System.Windows.Forms.CheckBox();
-            this.dpCliente = new System.Windows.Forms.CheckBox();
+            this.chkSelCliente = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.gridOrcamento)).BeginInit();
             this.toolStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -79,7 +76,7 @@
             this.gridOrcamento.PrintInfo.MeasurementDevice = C1.Win.C1TrueDBGrid.PrintInfo.MeasurementDeviceEnum.Screen;
             this.gridOrcamento.PrintInfo.MeasurementPrinterName = null;
             this.gridOrcamento.PrintInfo.PageSettings = ((System.Drawing.Printing.PageSettings)(resources.GetObject("gridOrcamento.PrintInfo.PageSettings")));
-            this.gridOrcamento.Size = new System.Drawing.Size(1339, 410);
+            this.gridOrcamento.Size = new System.Drawing.Size(1339, 385);
             this.gridOrcamento.TabIndex = 3;
             this.gridOrcamento.UseCompatibleTextRendering = false;
             this.gridOrcamento.PropBag = resources.GetString("gridOrcamento.PropBag");
@@ -199,7 +196,7 @@
             this.rangeDate.KeyPreview = false;
             this.rangeDate.Label1Text = dpLibrary05.ucSymGen_ReferenceDtp.LabelTextEnum.TFrom;
             this.rangeDate.Label2Text = dpLibrary05.ucSymGen_ReferenceDtp.LabelTextEnum.TTo;
-            this.rangeDate.Location = new System.Drawing.Point(9, 105);
+            this.rangeDate.Location = new System.Drawing.Point(21, 106);
             this.rangeDate.Margin = new System.Windows.Forms.Padding(5);
             this.rangeDate.Name = "rangeDate";
             this.rangeDate.OpenModal = false;
@@ -211,7 +208,6 @@
             // gbData
             // 
             this.gbData.Controls.Add(this.dtAlteracao);
-            this.gbData.Controls.Add(this.dtCancelamento);
             this.gbData.Controls.Add(this.dtFechamento);
             this.gbData.Controls.Add(this.dtAbertura);
             this.gbData.Controls.Add(this.rangeDate);
@@ -227,24 +223,12 @@
             // dtAlteracao
             // 
             this.dtAlteracao.AutoSize = true;
-            this.dtAlteracao.Location = new System.Drawing.Point(271, 60);
+            this.dtAlteracao.Location = new System.Drawing.Point(221, 34);
             this.dtAlteracao.Name = "dtAlteracao";
-            this.dtAlteracao.Size = new System.Drawing.Size(137, 20);
+            this.dtAlteracao.Size = new System.Drawing.Size(134, 20);
             this.dtAlteracao.TabIndex = 5;
-            this.dtAlteracao.TabStop = true;
-            this.dtAlteracao.Text = "Data de Alteração";
+            this.dtAlteracao.Text = "Data de Validade";
             this.dtAlteracao.UseVisualStyleBackColor = true;
-            // 
-            // dtCancelamento
-            // 
-            this.dtCancelamento.AutoSize = true;
-            this.dtCancelamento.Location = new System.Drawing.Point(271, 34);
-            this.dtCancelamento.Name = "dtCancelamento";
-            this.dtCancelamento.Size = new System.Drawing.Size(166, 20);
-            this.dtCancelamento.TabIndex = 4;
-            this.dtCancelamento.TabStop = true;
-            this.dtCancelamento.Text = "Data de Cancelamento";
-            this.dtCancelamento.UseVisualStyleBackColor = true;
             // 
             // dtFechamento
             // 
@@ -253,53 +237,41 @@
             this.dtFechamento.Name = "dtFechamento";
             this.dtFechamento.Size = new System.Drawing.Size(154, 20);
             this.dtFechamento.TabIndex = 3;
-            this.dtFechamento.TabStop = true;
             this.dtFechamento.Text = "Data de Fechamento";
             this.dtFechamento.UseVisualStyleBackColor = true;
             // 
             // dtAbertura
             // 
             this.dtAbertura.AutoSize = true;
+            this.dtAbertura.Checked = true;
             this.dtAbertura.Location = new System.Drawing.Point(21, 34);
             this.dtAbertura.Name = "dtAbertura";
-            this.dtAbertura.Size = new System.Drawing.Size(130, 20);
+            this.dtAbertura.Size = new System.Drawing.Size(145, 20);
             this.dtAbertura.TabIndex = 2;
             this.dtAbertura.TabStop = true;
-            this.dtAbertura.Text = "Data de Abertura";
+            this.dtAbertura.Text = "Data do Orçamento";
             this.dtAbertura.UseVisualStyleBackColor = true;
             // 
             // gbAcoes
             // 
             this.gbAcoes.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gbAcoes.Controls.Add(this.optExcluir);
             this.gbAcoes.Controls.Add(this.optReabrir);
             this.gbAcoes.Controls.Add(this.optFechar);
             this.gbAcoes.Controls.Add(this.optCancelar);
-            this.gbAcoes.Location = new System.Drawing.Point(4, 579);
+            this.gbAcoes.Location = new System.Drawing.Point(4, 548);
             this.gbAcoes.Margin = new System.Windows.Forms.Padding(4);
             this.gbAcoes.Name = "gbAcoes";
             this.gbAcoes.Padding = new System.Windows.Forms.Padding(4);
-            this.gbAcoes.Size = new System.Drawing.Size(1337, 88);
+            this.gbAcoes.Size = new System.Drawing.Size(1337, 119);
             this.gbAcoes.TabIndex = 4;
             this.gbAcoes.TabStop = false;
             this.gbAcoes.Text = "O que deseja fazer?";
             // 
-            // optExcluir
-            // 
-            this.optExcluir.AutoSize = true;
-            this.optExcluir.Location = new System.Drawing.Point(199, 52);
-            this.optExcluir.Margin = new System.Windows.Forms.Padding(4);
-            this.optExcluir.Name = "optExcluir";
-            this.optExcluir.Size = new System.Drawing.Size(134, 20);
-            this.optExcluir.TabIndex = 10;
-            this.optExcluir.Text = "Excluir orçamento";
-            this.optExcluir.UseVisualStyleBackColor = true;
-            // 
             // optReabrir
             // 
             this.optReabrir.AutoSize = true;
-            this.optReabrir.Location = new System.Drawing.Point(199, 24);
+            this.optReabrir.Location = new System.Drawing.Point(21, 80);
             this.optReabrir.Margin = new System.Windows.Forms.Padding(4);
             this.optReabrir.Name = "optReabrir";
             this.optReabrir.Size = new System.Drawing.Size(140, 20);
@@ -310,18 +282,20 @@
             // optFechar
             // 
             this.optFechar.AutoSize = true;
-            this.optFechar.Location = new System.Drawing.Point(32, 52);
+            this.optFechar.Checked = true;
+            this.optFechar.Location = new System.Drawing.Point(21, 24);
             this.optFechar.Margin = new System.Windows.Forms.Padding(4);
             this.optFechar.Name = "optFechar";
             this.optFechar.Size = new System.Drawing.Size(137, 20);
             this.optFechar.TabIndex = 0;
+            this.optFechar.TabStop = true;
             this.optFechar.Text = "Fechar orçamento";
             this.optFechar.UseVisualStyleBackColor = true;
             // 
             // optCancelar
             // 
             this.optCancelar.AutoSize = true;
-            this.optCancelar.Location = new System.Drawing.Point(32, 23);
+            this.optCancelar.Location = new System.Drawing.Point(21, 52);
             this.optCancelar.Margin = new System.Windows.Forms.Padding(4);
             this.optCancelar.Name = "optCancelar";
             this.optCancelar.Size = new System.Drawing.Size(149, 20);
@@ -332,9 +306,8 @@
             // groupBox2
             // 
             this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Controls.Add(this.chkUsuario);
             this.groupBox2.Controls.Add(this.chkVendedor);
-            this.groupBox2.Controls.Add(this.dpCliente);
+            this.groupBox2.Controls.Add(this.chkSelCliente);
             this.groupBox2.Location = new System.Drawing.Point(863, 81);
             this.groupBox2.Margin = new System.Windows.Forms.Padding(3, 2, 3, 2);
             this.groupBox2.Name = "groupBox2";
@@ -343,16 +316,6 @@
             this.groupBox2.TabIndex = 501;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Filtrar Por:";
-            // 
-            // chkUsuario
-            // 
-            this.chkUsuario.AutoSize = true;
-            this.chkUsuario.Location = new System.Drawing.Point(231, 35);
-            this.chkUsuario.Name = "chkUsuario";
-            this.chkUsuario.Size = new System.Drawing.Size(76, 20);
-            this.chkUsuario.TabIndex = 2;
-            this.chkUsuario.Text = "Usuário";
-            this.chkUsuario.UseVisualStyleBackColor = true;
             // 
             // chkVendedor
             // 
@@ -364,16 +327,15 @@
             this.chkVendedor.Text = "Vendedor";
             this.chkVendedor.UseVisualStyleBackColor = true;
             // 
-            // dpCliente
+            // chkSelCliente
             // 
-            this.dpCliente.AutoSize = true;
-            this.dpCliente.Location = new System.Drawing.Point(14, 36);
-            this.dpCliente.Name = "dpCliente";
-            this.dpCliente.Size = new System.Drawing.Size(70, 20);
-            this.dpCliente.TabIndex = 0;
-            this.dpCliente.Text = "Cliente";
-            this.dpCliente.UseVisualStyleBackColor = true;
-            this.dpCliente.CheckedChanged += new System.EventHandler(this.dpCliente_CheckedChanged);
+            this.chkSelCliente.AutoSize = true;
+            this.chkSelCliente.Location = new System.Drawing.Point(14, 36);
+            this.chkSelCliente.Name = "chkSelCliente";
+            this.chkSelCliente.Size = new System.Drawing.Size(70, 20);
+            this.chkSelCliente.TabIndex = 0;
+            this.chkSelCliente.Text = "Cliente";
+            this.chkSelCliente.UseVisualStyleBackColor = true;
             // 
             // CancelarFehacrOrcamentosView
             // 
@@ -431,14 +393,11 @@
         private System.Windows.Forms.RadioButton optFechar;
         private System.Windows.Forms.RadioButton optCancelar;
         private System.Windows.Forms.GroupBox groupBox2;
-        private System.Windows.Forms.RadioButton optExcluir;
         private System.Windows.Forms.RadioButton optReabrir;
         private System.Windows.Forms.RadioButton dtFechamento;
         private System.Windows.Forms.RadioButton dtAbertura;
-        private System.Windows.Forms.RadioButton dtCancelamento;
         private System.Windows.Forms.RadioButton dtAlteracao;
-        private System.Windows.Forms.CheckBox chkUsuario;
         private System.Windows.Forms.CheckBox chkVendedor;
-        private System.Windows.Forms.CheckBox dpCliente;
+        private System.Windows.Forms.CheckBox chkSelCliente;
     }
 }

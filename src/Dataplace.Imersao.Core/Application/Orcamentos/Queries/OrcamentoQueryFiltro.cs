@@ -6,16 +6,14 @@ using System.Collections.Generic;
 
 namespace Dataplace.Imersao.Core.Application.Orcamentos.Queries
 {
-    public class OrcamentoQuery : QuerySort<IEnumerable<OrcamentoViewModel>>, IQuerySort<IEnumerable<OrcamentoViewModel>>
+    public class OrcamentoQueryFiltro : QuerySort<IEnumerable<OrcamentoViewModel>>, IQuerySort<IEnumerable<OrcamentoViewModel>>
     {
         public OrcamentoStatusEnum? Situacao { get; set; }
         public IList<OrcamentoStatusEnum> SituacaoList { get; set; }
         public DateTime? DtInicio { get; set; }
         public DateTime? DtFim { get; set; }
-        public string TpBusca { get; set; }
+        public string Filtro { get; set; }
         public IList<string> CdClienteList { get; set; }
-        //public IList<string> UsuariosList { get; set; }
-        public IList<string> CdVendedorList { get; set; }
     }
 
 

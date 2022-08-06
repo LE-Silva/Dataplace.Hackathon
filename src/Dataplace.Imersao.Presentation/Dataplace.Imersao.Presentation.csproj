@@ -96,7 +96,6 @@
     <Compile Include="Views\Orcamentos\OrcamentoView.Designer.cs">
       <DependentUpon>OrcamentoView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Orcamentos\Providers\ClienteListViewProvider.cs" />
     <Compile Include="Views\Orcamentos\Providers\OrcamentoItemViewProvider.cs" />
     <Compile Include="Views\Orcamentos\Providers\OrcamentoViewProvider.cs" />
     <Compile Include="Views\Orcamentos\Reports\OrcamentoReportView.cs">
@@ -111,6 +110,8 @@
     <Compile Include="Views\Orcamentos\Tools\CancelarFehacrOrcamentosView.Designer.cs">
       <DependentUpon>CancelarFehacrOrcamentosView.cs</DependentUpon>
     </Compile>
+    <Compile Include="Views\Providers\ClienteListViewProvider - Copy.cs" />
+    <Compile Include="Views\Providers\ClienteListViewProvider.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Connected Services\" />

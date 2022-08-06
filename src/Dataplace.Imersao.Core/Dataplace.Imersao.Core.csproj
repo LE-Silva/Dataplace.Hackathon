@@ -91,6 +91,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application\Behaviors\ValidationBehaviour.cs" />
+    <Compile Include="Application\Vendedores\Queries\VendedorQuery.cs" />
+    <Compile Include="Application\Vendedores\Queries\VendedorQueryHandler.cs" />
+    <Compile Include="Application\Vendedores\ViewModels\VendedorViewModel.cs" />
+    <Compile Include="Application\Clientes\Queries\ClienteQuery.cs" />
+    <Compile Include="Application\Clientes\Queries\ClienteQueryHandler.cs" />
+    <Compile Include="Application\Clientes\ViewModels\ClienteViewModel.cs" />
     <Compile Include="Application\Orcamentos\Commands\AdicionarOrcamentoCommand.cs" />
     <Compile Include="Application\Orcamentos\Commands\AdicionarItemCommand.cs" />
     <Compile Include="Application\Orcamentos\Commands\AtribuirDataDePrevisaoEntregaAoOrcamentoCommand.cs" />
@@ -122,6 +128,7 @@
     <Compile Include="Application\Orcamentos\Queries\OrcamentoItemRefreshQuery.cs" />
     <Compile Include="Application\Orcamentos\Queries\OrcamentoMoveQuery.cs" />
     <Compile Include="Application\Orcamentos\Queries\OrcamentoQuery.cs" />
+    <Compile Include="Application\Orcamentos\Queries\OrcamentoQueryFiltro.cs" />
     <Compile Include="Application\Orcamentos\Queries\OrcamentoQueryHandler.cs" />
     <Compile Include="Application\Orcamentos\Queries\OrcamentoRefreshQuery.cs" />
     <Compile Include="Application\Orcamentos\ViewModels\OrcamentoItemViewModel.cs" />

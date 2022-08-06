@@ -57,6 +57,8 @@ namespace Dataplace.Imersao.App
             // presentation - view provider
             services.AddRegisterViewProvider<InterfaceView, OrcamentoViewProvider>();
             services.AddRegisterViewProvider<InterfaceView, OrcamentoItemViewProvider>();
+            services.AddRegisterViewProvider<SelectableListView, ClienteListViewProvider>();
+            services.AddRegisterViewProvider<SelectableListView, VendedorListViewProvider>();
 
 
             // product query

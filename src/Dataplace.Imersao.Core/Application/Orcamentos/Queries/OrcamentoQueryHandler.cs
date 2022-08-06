@@ -85,9 +85,16 @@ namespace Dataplace.Imersao.Core.Application.Orcamentos.Queries
             if (request.SituacaoList != null && request.SituacaoList.Count > 0)
                 builder.Where($"orcamento.StOrcamento IN ('{string.Join("','", request.SituacaoList.Select(x => x.ToDataValue()))}')");
 
+            if(!string.IsNullOrEmpty(request.TpBusca?.Trim()))
             if(request.DtInicio.HasValue && request.DtFim.HasValue)
-                builder.Where("orcamento.DtOrcamento between @DtInicio AND @DtFim ", new { DtInicio = request.DtInicio.Value.Date, DtFim = request.DtFim.Value.Date.AddDays(1).AddSeconds(-1) });
+                builder.Where($"orcamento.{request.TpBusca} between @DtInicio AND @DtFim ", new { DtInicio = request.DtInicio.Value.Date, DtFim = request.DtFim.Value.Date.AddDays(1).AddSeconds(-1) });
 
+            if (request.CdClienteList != null)
+                builder.Where($"orcamento.CdCliente IN ('{string.Join("','", request.CdClienteList.Select(x => x.AsQueryable()))}')");
+            //if (request.UsuariosList != null)
+            //    builder.Where($"orcamento.usuario IN ('{string.Join("','", request.UsuariosList.Select(x => x.AsQueryable()))}')");
+            //if (request.CdVendedorList != null)
+            //    builder.Where($"orcamento.CdCliente IN ('{string.Join("','", request.CdVendedorList.Select(x => x.AsQueryable()))}')");
 
             builder.OrderBy("orcamento.DtOrcamento DESC");
 
