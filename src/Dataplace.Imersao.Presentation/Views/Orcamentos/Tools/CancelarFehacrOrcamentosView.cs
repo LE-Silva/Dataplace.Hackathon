@@ -108,7 +108,8 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             });
 
             //var vendedorViewProvicer = dpLibrary05.BootStrapper.Container.GetViewProvider<SelectableListView, VendedorListViewProvider>();
-            //chkSelCliente.ConfigureSelector(clienteViewProvicer, itens => {
+            //chkSelCliente.ConfigureSelector(clienteViewProvicer, itens =>
+            //{
             //    _vendedoresSelecionados = (IList<VendedorViewModel>)itens.ToList();
             //});
 
@@ -117,6 +118,12 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
             //  desabilitar ou habilitar algun componente em tela
             //  deixar invisível ou algo assim
             VerificarStatusControles();
+
+
+            if (rangeDate.Date1.Parent is TableLayoutPanel t)
+            {
+                t.Width = 300;
+            }
 
         }
         #endregion
@@ -611,32 +618,6 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
 
         }
 
-        private async Task ExcluirOrcamento(OrcamentoViewModel item)
-        {
-            //try 
-            //{
-            //    using (var scope = dpLibrary05.Infrastructure.ServiceLocator.ServiceLocatorScoped.Factory())
-            //    {
-
-            //        var command = new ExcluirOrcamentoCommand(item);
-            //        var mediator = scope.Container.GetInstance<IMediatorHandler>();
-
-            //        var notifications = scope.Container.GetInstance<INotificationHandler<DomainNotification>>();
-            //        await mediator.SendCommand(command);
-
-            //        item.Result = Result.ResultFactory.New(notifications.GetNotifications());
-            //        if (item.Result.Success)
-            //        {
-            //            MessageBox.Show("Orçamento Excuido com Sucesso");
-            //        }
-            //    }
-            //}
-            //catch
-            //{
-            //    MessageBox.Show("Erro ao excluir o orçamento.");
-            //}
-
-        }
         #endregion
 
         #region consultas
