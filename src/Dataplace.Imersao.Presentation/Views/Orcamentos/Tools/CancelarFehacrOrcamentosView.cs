@@ -259,7 +259,7 @@ namespace Dataplace.Imersao.Presentation.Views.Orcamentos.Tools
                 if (e.CancellationRequested)
                     break;
 
-                e.ProgressValue += 1;
+                //e.ProgressValue += 1;
             }
 
             e.EndProcess();

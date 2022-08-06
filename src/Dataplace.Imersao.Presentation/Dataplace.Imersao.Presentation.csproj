@@ -110,7 +110,7 @@
     <Compile Include="Views\Orcamentos\Tools\CancelarFehacrOrcamentosView.Designer.cs">
       <DependentUpon>CancelarFehacrOrcamentosView.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\Providers\ClienteListViewProvider - Copy.cs" />
+    <Compile Include="Views\Providers\VendedorListViewProvider.cs" />
     <Compile Include="Views\Providers\ClienteListViewProvider.cs" />
   </ItemGroup>
   <ItemGroup>
