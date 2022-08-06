@@ -93,8 +93,8 @@ namespace Dataplace.Imersao.Core.Application.Orcamentos.Queries
                 builder.Where($"orcamento.CdCliente IN ('{string.Join("','", request.CdClienteList.Select(x => x.AsQueryable()))}')");
             //if (request.UsuariosList != null)
             //    builder.Where($"orcamento.usuario IN ('{string.Join("','", request.UsuariosList.Select(x => x.AsQueryable()))}')");
-            //if (request.CdVendedorList != null)
-            //    builder.Where($"orcamento.CdCliente IN ('{string.Join("','", request.CdVendedorList.Select(x => x.AsQueryable()))}')");
+            if (request.CdVendedorList != null)
+                builder.Where($"orcamento.CdVendedor IN ('{string.Join("','", request.CdVendedorList.Select(x => x.AsQueryable()))}')");
 
             builder.OrderBy("orcamento.DtOrcamento DESC");
 
